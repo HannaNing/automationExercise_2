@@ -4,6 +4,7 @@ module.exports = {
   },
 
   getRandomEmail() {
+    console.log('random email')
     return 'ninhthihoa' + Math.floor(Math.random() * 111111) + '@yopmail.com'
   },
 
