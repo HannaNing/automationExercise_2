@@ -4,6 +4,8 @@ export default class HeaderComponents {
   getDeleteAccountBtn = () => cy.get('[href="/delete_account"]')
   getLogoutBtn = () => cy.get('[href="/logout"]')
   getContactUs = () => cy.get('[href="/contact_us"]')
+  getTestCases = () => cy.get('[href="/test_cases"] i')
+  getProducts = () => cy.get('[href="/products"] i')
 
   //   headerMenuItemList = () => cy.get('.nav navbar-nav')
 

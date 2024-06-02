@@ -6,10 +6,13 @@ import SignUpPage from '../models/pages/SignUpPage'
 import SignUpSuccessfullPage from '../models/pages/SignUpSuccessfullPage'
 import DeleteAccountPage from '../models/pages/DeleteAccountPage'
 import ContactUsPage from '../models/pages/ContactUsPage'
+import ProductDetailPage from '../models/pages/ProductDetailPage'
+import { getRandomSearchProductName } from '../utils'
 
 describe('Automation Exercise Flow Test Cases', () => {
   let registerData
   let signUpEmail = getRandomEmail()
+  let searchProductNameInput = getRandomSearchProductName()
 
   let headerComponents = new HeaderComponents()
   let homepageComponents = new HomepageComponents()
@@ -18,6 +21,7 @@ describe('Automation Exercise Flow Test Cases', () => {
   let signUpSuccessfullPage = new SignUpSuccessfullPage()
   let deleteAccountPage = new DeleteAccountPage()
   let contactUsPage = new ContactUsPage()
+  let productDetailPage = new ProductDetailPage()
 
   const LOGIN_CRED = {
     username: signUpEmail,
@@ -99,19 +103,15 @@ describe('Automation Exercise Flow Test Cases', () => {
 
   it('Test Case 6: Contact Us Form', () => {
     homepageComponents.getBanner().should('be.visible')
-    loginPage.getContactUs().click()
+    headerComponents.getContactUs().click()
     contactUsPage.getTitleGetInTouch().should('be.visible')
     contactUsPage.getContactName().type(registerData.name)
-    contactUsPage.getContactEmail().type(registerData.email)
+    contactUsPage.getContactEmail().type(signUpEmail)
     contactUsPage.getContactSubject().type('Test Subject')
     contactUsPage.getContactMessage().type('Test message')
     cy.fixture('dummies.pdf').then((fileContent) => {
       // Use the cy.get() command to select the file input element
-      contactUsPage.getUploadBtn().attachFile({
-        fileContent,
-        fileName: 'sample.jpg',
-        mimeType: 'image/jpeg',
-      })
+      contactUsPage.getUploadBtn().selectFile('cypress/fixtures/dummies.pdf')
     })
     contactUsPage.getSubmitBtn().click()
     contactUsPage
@@ -120,5 +120,39 @@ describe('Automation Exercise Flow Test Cases', () => {
         'have.text',
         'Success! Your details have been submitted successfully.'
       )
+  })
+
+  it('Test Case 7: Verify Test Cases Page', () => {
+    homepageComponents.getBanner().should('be.visible')
+    headerComponents.getTestCases().click()
+    cy.url().should('include', '/test_cases')
+  })
+
+  it('Test Case 8: Verify All Products and product detail page', () => {
+    homepageComponents.getBanner().should('be.visible')
+    headerComponents.getProducts().click()
+    cy.url().should('include', '/products')
+    homepageComponents.getProductsList().should('be.visible')
+    homepageComponents.goToProductDetailPage()
+    cy.url().should('include', '/product_details/1')
+    productDetailPage.verifyProductInformation()
+  })
+
+  it('Test Case 9: Search Product', () => {
+    homepageComponents.getBanner().should('be.visible')
+    headerComponents.getProducts().click()
+    cy.url().should('include', '/products')
+    homepageComponents.getSearchTxb().type(searchProductNameInput)
+    homepageComponents.getSearchBtn().click()
+    homepageComponents.getSearchProductName(searchProductNameInput)
+  })
+
+  it('Test Case 10: Verify Subscription in home page', () => {
+    homepageComponents.getBanner().should('be.visible')
+    homepageComponents.getSubscription().scrollIntoView()
+    homepageComponents
+      .getSubscription()
+      .invoke('text')
+      .should('eq', 'Subscription')
   })
 })
