@@ -102,6 +102,7 @@ describe('Automation Exercise Flow Test Cases', () => {
   })
 
   it('Test Case 6: Contact Us Form', () => {
+    console.log('test case 6')
     homepageComponents.getBanner().should('be.visible')
     headerComponents.getContactUs().click()
     contactUsPage.getTitleGetInTouch().should('be.visible')
