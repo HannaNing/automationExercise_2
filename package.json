@@ -1,0 +1,21 @@
+{
+  "name": "automationexercise",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "open": "cypress open",
+    "test": "cypress run"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cypress": "^13.10.0"
+  },
+  "devDependencies": {
+    "@cypress/xpath": "^2.0.3",
+    "allure-commandline": "^2.29.0",
+    "allure-cypress": "^2.15.1",
+    "cypress-xpath": "^2.0.1"
+  }
+}
