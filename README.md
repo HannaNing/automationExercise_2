@@ -9,7 +9,8 @@ A brief description of the project.
 Before getting started, make sure you have the following installed on your machine:
 
 - Node.js
-- Git 
+- Git
+- Java
 
 ## Installation
 
